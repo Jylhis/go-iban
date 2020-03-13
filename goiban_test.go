@@ -24,9 +24,9 @@ var uglyStrings = []string{
 	"G   B 9  8    M ID L  0 70 0  93 1 2   34 5 6  7 8",
 }
 
-func TestIsValid(t *testing.T) {
+func TestValidate(t *testing.T) {
 	for _, address := range ibans {
-		ret, msg := IsValid(address)
+		ret, msg := Validate(address)
 		if !ret {
 			t.Errorf("Error with address %s, error: %s", address, msg)
 		}
@@ -34,10 +34,10 @@ func TestIsValid(t *testing.T) {
 
 }
 
-func BenchmarkIsValid(t *testing.B) {
+func BenchmarkValidate(t *testing.B) {
 	for i := 0; i < t.N; i++ {
 		for _, address := range ibans {
-			ret, msg := IsValid(address)
+			ret, msg := Validate(address)
 			if !ret {
 				t.Errorf("Error with address %s, error: %s", address, msg)
 			}
@@ -48,7 +48,7 @@ func BenchmarkIsValid(t *testing.B) {
 
 func TestUglyAddress(t *testing.T) {
 	for _, address := range uglyStrings {
-		ret, msg := IsValid(address)
+		ret, msg := Validate(address)
 		if !ret {
 			t.Errorf("Error with address %s, error: %s", address, msg)
 		}
@@ -56,13 +56,13 @@ func TestUglyAddress(t *testing.T) {
 }
 
 func TestDebug(t *testing.T) {
-	ret, msg := IsValid(" fi42 5000 1510 0000 23 ")
+	ret, msg := Validate(" fi42 5000 1510 0000 23 ")
 	if !ret {
 		t.Errorf("Error debug1: %s", msg)
 
 	}
 	fmt.Println("-----------")
-	ret2, msg2 := IsValid("FI4250001510500023")
+	ret2, msg2 := Validate("FI4250001510500023")
 	if ret2 {
 		t.Errorf("Error (this should be invalid): %s", msg2)
 	}

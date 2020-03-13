@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// IsValid Checks if provided IBAN is valid
-func IsValid(iban string) (bool, string) {
+// Validate Checks if provided IBAN is valid
+func Validate(iban string) (bool, string) {
 
 	var trimmed string = strings.ToUpper(strings.Replace(iban, " ", "", -1))
 
