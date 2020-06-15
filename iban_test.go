@@ -1,4 +1,4 @@
-package goiban
+package iban
 
 import (
 	"fmt"

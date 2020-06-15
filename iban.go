@@ -1,18 +1,19 @@
-package goiban
+package iban
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 )
 
 // Validate Checks if provided IBAN is valid
-func Validate(iban string) (bool, string) {
+func Validate(iban string) (isValid bool, err error) {
 
 	var trimmed string = strings.ToUpper(strings.Replace(iban, " ", "", -1))
 
 	if len(trimmed) > 34 || len(trimmed) <= 5 {
-		return false, "Invalid length" // wrong length
+		return false, errors.New("Invalid length") // wrong length
 	}
 
 	countryCode := trimmed[0:2]
@@ -20,15 +21,15 @@ func Validate(iban string) (bool, string) {
 	last := trimmed[4:]
 
 	if !isLetter(countryCode) {
-		return false, "No country code" // no country code
+		return false, errors.New("No country code") // no country code
 	}
 
 	output := mod(alphToDec(last+first), 97)
 
 	if output == 1 {
-		return true, "Valid IBAN"
+		return true, nil
 	}
-	return false, "Invalid IBAN"
+	return false, errors.New("Invalid IBAN")
 }
 
 func isLetter(str string) bool {
